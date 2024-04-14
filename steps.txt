@@ -11,4 +11,16 @@ vscode extension vscode-proto3
 protoc --go_out=. --go-grpc_out=. proto/course_category.proto
 
 
-parei em Implementando CreateCategory
+evans -r repl
+package pb 
+service CategoryService
+call CreateCategory
+
+
+sqlite3 db.sqlite
+
+create table categories (id string, name string, description string);
+
+
+evans -r repl -p 50052
+
