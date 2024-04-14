@@ -84,3 +84,23 @@ func (c *Category) FindByCourseID(courseID string) (Category, error) {
 		Description: description,
 	}, nil
 }
+
+func (c *Category) UpdateCategory(categoryID string, newName string, newDescription string) (Category, error) {
+	stmt, err := c.db.Prepare("UPDATE categories SET name = ?, description = ? WHERE id = ?")
+	if err != nil {
+		return Category{}, err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(newName, newDescription, categoryID)
+	if err != nil {
+		return Category{}, err
+	}
+
+	return Category{
+		ID:          categoryID,
+		Name:        newName,
+		Description: newDescription,
+	}, nil
+}
+

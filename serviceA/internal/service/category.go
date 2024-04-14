@@ -62,3 +62,25 @@ func (c *CategoryService) GetCategory(ctx context.Context, input *pb.CategoryGet
 	}
 	return categoryResponse, nil
 }
+
+func (c *CategoryService) UpdateCategory(ctx context.Context, input *pb.UpdateCategoryRequest) (*pb.Category, error) {
+	getCategoryReq := &pb.CategoryGetRequest{
+		Id: input.Id,
+	}
+	_, err := c.GetCategory(ctx, getCategoryReq)
+	if err != nil {
+		return nil, err
+	}
+
+	category, err := c.CategoryDb.UpdateCategory(input.Id, input.Name, input.Description)
+	if err != nil {
+		return nil, err
+	}
+	categoryResponse := &pb.Category{
+		Id:          category.ID,
+		Name:        category.Name,
+		Description: category.Description,
+	}
+	return categoryResponse, nil
+}
+

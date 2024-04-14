@@ -23,8 +23,15 @@ message CategoryGetRequest {
     string id = 1;
 }
 
+message UpdateCategoryRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
 service CategoryService {
     rpc CreateCategory(CreateCategoryRequest) returns (Category) {}
     rpc ListCategories(blank) returns (CategoryList) {}
     rpc GetCategory(CategoryGetRequest) returns (Category) {}
+    rpc UpdateCategory(UpdateCategoryRequest) returns (Category) {}
 }
